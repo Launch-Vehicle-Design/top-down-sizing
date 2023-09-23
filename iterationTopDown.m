@@ -20,8 +20,8 @@ subplot(2,1,2)
 plot(vrq_ratio_stg_1,sizing_table(1,:)./sizing_table(6,:));
 
 %% sizing iteration - three stage rocket
-vrq_ratio_stg_1 = 0.01:0.005:0.99;
-vrq_ratio_stg_2 = 0.01:0.005:0.99;
+vrq_ratio_stg_1 = 0.01:0.002:0.99;
+vrq_ratio_stg_2 = 0.01:0.002:0.99;
 [VRQ1,VRQ2] = meshgrid(vrq_ratio_stg_1,vrq_ratio_stg_2);
 VRQ3 = 1-VRQ1-VRQ2; VRQ3(VRQ3<0) = nan;
 
@@ -54,5 +54,5 @@ end
 % colorbar; clim([0,1000])
 % title("Third Stage Weight"); colorbar; xlabel("% 1st stage dV"); ylabel("% 2nd stage dV");
 
-figure; plot3(VRQ1,VRQ2,sizing_table_3stg(:,:,11)); zlim([0,1e4])
+figure; surf(VRQ1,VRQ2,sizing_table_3stg(:,:,11),"EdgeColor","interp"); clim([0,1e4]); zlim([0,1e4])
 title("Total Liftoff Weight"); xlabel("% 1st stage dV"); ylabel("% 2nd stage dV");
