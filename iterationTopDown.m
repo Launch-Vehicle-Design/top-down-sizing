@@ -106,3 +106,9 @@ end
 fuel_vol_min_mass_3stg = fuel_vol_3stg(ind_3stg);
 disp("3 Stage - Min Mass = "+min_mass_3stg+" kg Fuel Vol = "+fuel_vol_min_mass_3stg+" m^3 as "+ ...
     fuel_vol_min_mass_3stg/param.bounding_box_volu*100+"% of the bounding box")
+optimal_3stg = nan([size(sizing_table_3stg,3),1]);
+for i = 1:size(sizing_table_3stg,3)
+    temp = sizing_table_3stg(:,:,i);
+    optimal_3stg(i) = temp(ind_3stg);
+end
+save("OptimalSolution.mat","optimal_3stg","param")

@@ -23,17 +23,17 @@ function param = sysParam()
     % universal parameters
     param.g0 = 9.80655;
 
-    param.is_scram = true;
+    param.is_scram = false;
     param.is_scram_solid_boost = false;
     % first stage
-    param.Isp_stg1 = 1200;
-    param.sigma_stg1 = 0.4;
-    param.density_stg1 = 800;
+    param.Isp_stg1 = 320;
+    param.sigma_stg1 = 0.06;
+    param.density_stg1 = 2040;
     
     % second stage
-    param.Isp_stg2 = 270;
-    param.sigma_stg2 = 0.1;
-    param.density_stg2 = 1370;
+    param.Isp_stg2 = 320;
+    param.sigma_stg2 = 0.08;
+    param.density_stg2 = 2040;
 
     % third stage
     param.Isp_stg3 = 320;
