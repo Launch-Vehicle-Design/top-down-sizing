@@ -45,6 +45,7 @@ if param.is_scram_solid_boost
 end
 vrq_ratio_stg_2_3stg = 0.01:0.002:max_dv_stg_1_perc-solid_boost_dv_stg_1_perc;
 [VRQ1,VRQ2] = meshgrid(vrq_ratio_stg_1_3stg,vrq_ratio_stg_2_3stg);
+
 VRQ3 = 1-VRQ1-VRQ2; VRQ3(VRQ3<0) = nan;
 
 dVRQ1 = VRQ1*param.vrq; dVRQ2 = VRQ2*param.vrq;
