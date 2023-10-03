@@ -4,8 +4,9 @@ param = sysParam();
 max_dv_stg_1_perc = 0.99;
 if param.is_scram
     lambda = 1.401; R = 287;
-    estimate_losses = param.vrq - param.orb_vel;
-    max_dv_stg_1 = param.scram_mach*sqrt(lambda*R*param.scram_ceiling_temp) + 0.9*estimate_losses;
+    gloss = @(h1,h2) sqrt(2*param.Mearth*param.G*(1/(h1+param.Rearth)-1/(h2+param.Rearth)));
+    max_dv_stg_1 = param.scram_mach*sqrt(lambda*R*param.scram_ceiling_temp) + ...
+        gloss(param.release_alt,param.scram_ceiling) + 0.9*(param.dragloss+param.proploss+param.steeloss);
     max_dv_stg_1_perc = max_dv_stg_1/param.vrq;
 end
 
@@ -25,7 +26,7 @@ dvrq_stg_2 = vrq_ratio_stg_2*param.vrq;
 
 sizing_table = nan([10 size(vrq_ratio_stg_1,2)]);
 for i = 1:size(vrq_ratio_stg_1,2)
-    sizing_table(:,i) = TWTOSizing(dvrq_stg_2(i),dvrq_stg_1(i),...
+    sizing_table(:,i) = TSTOSizing(dvrq_stg_2(i),dvrq_stg_1(i),...
         param.mPL,param.sigma_stg1,param.sigma_stg2,param.Isp_stg1*param.g0,param.Isp_stg2*param.g0);
 end
 fuel_vol_2stg = sizing_table(3,:)/param.density_stg2 + sizing_table(8,:)/param.density_stg1;
@@ -53,7 +54,7 @@ dVRQ3 = VRQ3*param.vrq;
 sizing_table_3stg = nan([size(dVRQ1,1) size(dVRQ1,2) 15]);
 for i = 1:size(dVRQ1,1)
     for j = 1:size(dVRQ1,2)
-        sizing_vec = TWTOSizing(dVRQ3(i,j),dVRQ2(i,j), ...
+        sizing_vec = TSTOSizing(dVRQ3(i,j),dVRQ2(i,j), ...
             param.mPL,param.sigma_stg2,param.sigma_stg3,param.Isp_stg2*param.g0,param.Isp_stg3*param.g0);
         % first stage
         mPL_stg_1 = sizing_vec(6); sigma_stg_1 = param.sigma_stg1; ve_stg_1 = param.Isp_stg1*param.g0;
@@ -93,13 +94,17 @@ else
     title("Total Fuel Volume"); xlabel("% 1st stage dV"); ylabel("% 2nd stage dV");
 end
 
-close all
+% close all
 % locate minimum
 if ~(param.is_scram && param.is_scram_solid_boost)
     [min_mass_2stg,ind_2stg] = min(sizing_table(6,:));
     fuel_vol_min_mass_2stg = fuel_vol_2stg(ind_2stg);
     disp("2 Stage - Min Mass = "+min_mass_2stg+" kg Fuel Vol = "+fuel_vol_min_mass_2stg+" m^3 as "+ ...
         fuel_vol_min_mass_2stg/param.bounding_box_volu*100+"% of the bounding box")
+    optimal_2stg = sizing_table(:,ind_2stg);
+    disp("2 Stage (kg) - m02="+optimal_2stg(1)+" ms2="+optimal_2stg(2)+" mp2="+optimal_2stg(3)+ ...
+        " m01="+optimal_2stg(6)+" ms1="+optimal_2stg(7)+" mp1="+optimal_2stg(8))
+    disp("2 Stage DV - 1st stg: "+vrq_ratio_stg_1(ind_2stg)+", 2nd stg: "+vrq_ratio_stg_2(ind_2stg))
 end
 
 [min_mass_3stg,ind_3stg] = min(sizing_table_3stg(:,:,11),[],"all");
@@ -111,4 +116,7 @@ for i = 1:size(sizing_table_3stg,3)
     temp = sizing_table_3stg(:,:,i);
     optimal_3stg(i) = temp(ind_3stg);
 end
+disp("3 Stage (kg) - m03="+optimal_3stg(1)+" ms3="+optimal_3stg(2)+" mp3="+optimal_3stg(3)+ ...
+        " m02="+optimal_3stg(6)+" ms2="+optimal_3stg(7)+" mp2="+optimal_3stg(8)+ ...
+        " m01="+optimal_3stg(11)+" ms1="+optimal_3stg(12)+" mp1="+optimal_3stg(13))
 save("OptimalSolution.mat","optimal_3stg","param")

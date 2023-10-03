@@ -41,7 +41,7 @@ m03_unw = m03-param.mPL;
 
 % 3 stg input check - if total dv is delivered for std PL
 deliver_dv = g0*(Isp1*log(m01/(m01-mp1))+Isp2*log(m02/(m02-mp2))+Isp3*log(m03/(m03-mp3)));
-if deliver_dv < param.vrq
+if deliver_dv + 0.01 < param.vrq
     disp("ERROR - System with Insufficient dv"); return
 end
 
