@@ -2,8 +2,11 @@
 function param = sysParam()
 
     % requirement
-    param.vrq = 10218;
-    param.mPL = 24; % kg
+    param.vrq = 10058;
+    param.mPL = 35; % kg
+    param.mPL_lowerBound = 24;
+    param.mPL_highBound = 45.4;
+    param.G = 0.0000000000667428;
     param.Mearth = 5.9722e+24;
     param.Rearth = 6378100;
     param.release_vel = 250.786;
@@ -15,28 +18,28 @@ function param = sysParam()
     param.bounding_box_leng = 240*0.0254;
     param.bounding_box_volu = param.bounding_box_side^2*param.bounding_box_leng;
     param.bounding_mass = 2265;
-    param.scram_ceiling = 50000;
+    param.scram_ceiling = 75000;
     param.scram_ceiling_temp = 270.65;
-    param.scram_mach = 8;
-    param.scram_solid_boost_mach = 3;
+    param.scram_mach = 9;
+    param.scram_solid_boost_mach = 5;
 
     % universal parameters
-    param.g0 = 9.80655;
+    param.g0 = 9.80665;
 
-    param.is_scram = false;
+    param.is_scram = true;
     param.is_scram_solid_boost = false;
     % first stage
-    param.Isp_stg1 = 320;
+    param.Isp_stg1 = 290;
     param.sigma_stg1 = 0.06;
     param.density_stg1 = 2040;
     
     % second stage
-    param.Isp_stg2 = 320;
+    param.Isp_stg2 = 290;
     param.sigma_stg2 = 0.08;
     param.density_stg2 = 2040;
 
     % third stage
-    param.Isp_stg3 = 320;
+    param.Isp_stg3 = 290;
     param.sigma_stg3 = 0.1;
     param.density_stg3 = 2040;
 
@@ -44,5 +47,4 @@ function param = sysParam()
     param.dragloss = 65;
     param.proploss = 150;
     param.steeloss = 360;
-    param.manvloss = 50;
     

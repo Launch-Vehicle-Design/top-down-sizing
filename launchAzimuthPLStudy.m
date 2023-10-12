@@ -1,13 +1,28 @@
 clear; clc; close all
 
+set(0,'DefaultTextInterpreter','latex')
+set(0,'DefaultFigureColor',[1,1,1])
+set(groot,'defaultAxesFontSize',16)
+
 load("OptimalSolution.mat")
 
 %% defined system
 % general parameters
-op_site_lat = 0:90; op_orb_inc = 0:90;
+op_site_lat = 0:0.2:90; op_orb_inc = 0:0.2:180;
 [OP_SITE_LAT,OP_ORB_INC] = meshgrid(op_site_lat,op_orb_inc);
 cos_ratio = cos(OP_ORB_INC/180*pi)./cos(OP_SITE_LAT/180*pi);
-cos_ratio(cos_ratio > 1) = 1;
+if sum(cos_ratio(cos_ratio > 1 & cos_ratio < 1+0.0001)) ~= 0
+    cos_ratio(cos_ratio > 1) = 1;
+end
+if sum(cos_ratio(cos_ratio > 1)) ~= 0
+    cos_ratio(cos_ratio > 1) = nan;
+end
+if sum(cos_ratio(cos_ratio < -1 & cos_ratio > -1-0.0001)) ~= 0
+    cos_ratio(cos_ratio < -1 & cos_ratio > -1-0.0001) = -1;
+end
+if sum(cos_ratio(cos_ratio < -1)) ~= 0
+    cos_ratio(cos_ratio < -1) = nan;
+end
 OP_INER_AZ_ASD = asin(cos_ratio); OP_INER_AZ_DSD = pi-asin(cos_ratio);
 OP_INER_AZ_ASD(OP_SITE_LAT>OP_ORB_INC) = nan;
 OP_INER_AZ_DSD(OP_SITE_LAT>OP_ORB_INC) = nan;
@@ -41,7 +56,7 @@ m03_unw = m03-param.mPL;
 
 % 3 stg input check - if total dv is delivered for std PL
 deliver_dv = g0*(Isp1*log(m01/(m01-mp1))+Isp2*log(m02/(m02-mp2))+Isp3*log(m03/(m03-mp3)));
-if deliver_dv < param.vrq
+if deliver_dv + 0.01 < param.vrq
     disp("ERROR - System with Insufficient dv"); return
 end
 
@@ -53,15 +68,25 @@ dvf = @(mPL) g0*(Isp1*log((m01_unw+mPL)/(m01_unw+mPL-mp1))+ ...
 MPL_SOLVE = nan(size(OP_SITE_LAT));
 for lat = 1:size(OP_SITE_LAT,2)
     for inc = size(OP_SITE_LAT,1):-1:lat
-        % REQ_UNMATCH_DV_BUDGET(inc,lat)
+        if isnan(REQ_UNMATCH_DV_BUDGET(inc,lat))
+            continue
+        end
         ddv = @(mPL) dvf(mPL)-REQ_UNMATCH_DV_BUDGET(inc,lat);
         MPL_SOLVE(inc,lat) = fzero(ddv,param.mPL);
     end
 end
 
-figure; surf(OP_SITE_LAT,OP_ORB_INC,MPL_SOLVE);
-xlabel("Launch site latitude"); ylabel("Desired orbit inclination");
-zlabel("Payload capacity");
+figure; surf(OP_SITE_LAT,OP_ORB_INC,MPL_SOLVE,'EdgeColor','none'); hold on
+surf(OP_SITE_LAT,OP_ORB_INC,ones(size(OP_SITE_LAT))*param.mPL,'EdgeColor','none','FaceColor',[107 175 226]/255,'FaceAlpha',0.2);
+xlabel("$\phi_{site}$ ($^{\circ}$)"); ylabel("$i_{orbit}$ ($^{\circ}$)");
+zlabel("Payload capacity (kg)");
+
+figure; contourf(OP_SITE_LAT,OP_ORB_INC,MPL_SOLVE, 41, 'EdgeColor','none','FaceAlpha',1); hold on
+% xline(30,"k--",'LineWidth',1.2); yline(100,"k--",'LineWidth',1.2); 
+% scatter(30,100,'filled','MarkerFaceColor',[247 129 52]/255,'LineWidth',1.2);
+clim([param.mPL_lowerBound param.mPL_highBound]); c = colorbar; c.Label.String = "Payload Capacity (kg)";
+xlabel("Launch site latitude ($^{\circ}$)"); ylabel("Desired orbit inclination ($^{\circ}$)");
+title("Impact of Launch Location and Orbit Inclination on Payload Capacity")
 
 %% Helper function ind for 3 stages
 function i = ind(stage,mass_type)
