@@ -3,7 +3,9 @@ function param = sysParam()
 
     % requirement
     param.vrq = 10058;
-    param.mPL = 45; % kg
+    param.mPL = 35; % kg
+    param.mPL_lowerBound = 24;
+    param.mPL_highBound = 45.4;
     param.G = 0.0000000000667428;
     param.Mearth = 5.9722e+24;
     param.Rearth = 6378100;
@@ -22,24 +24,24 @@ function param = sysParam()
     param.scram_solid_boost_mach = 5;
 
     % universal parameters
-    param.g0 = 9.80655;
+    param.g0 = 9.80665;
 
     param.is_scram = true;
-    param.is_scram_solid_boost = true;
+    param.is_scram_solid_boost = false;
     % first stage
     param.Isp_stg1 = 290;
     param.sigma_stg1 = 0.06;
     param.density_stg1 = 2040;
     
     % second stage
-    param.Isp_stg2 = 1000;
-    param.sigma_stg2 = 0.5;
-    param.density_stg2 = 800;
+    param.Isp_stg2 = 290;
+    param.sigma_stg2 = 0.08;
+    param.density_stg2 = 2040;
 
     % third stage
-    param.Isp_stg3 = 365;
+    param.Isp_stg3 = 290;
     param.sigma_stg3 = 0.1;
-    param.density_stg3 = 1370;
+    param.density_stg3 = 2040;
 
     % dv losses
     param.dragloss = 65;
