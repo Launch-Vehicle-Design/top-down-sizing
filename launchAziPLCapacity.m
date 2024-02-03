@@ -31,7 +31,8 @@ OP_INER_AZ_ASD(OP_SITE_LAT>OP_ORB_INC) = nan;
 OP_INER_AZ_DSD(OP_SITE_LAT>OP_ORB_INC) = nan;
 OP_SITE_VEL = 465.1*cos(OP_SITE_LAT/180*pi);
 
-cal_losses = 2272.52; cal_reserved = 200.54;
+cal_losses = param.gravloss+param.dragloss+param.proploss+param.steeloss; 
+cal_reserved = param.dvreserv;
 g0 = param.g0; Isp1 = param.Isp_stg1;
 Isp2 = param.Isp_stg2; Isp3 = param.Isp_stg3;
 
@@ -123,17 +124,18 @@ else
 end
 
 figure; surf(OP_SITE_LAT,OP_ORB_INC,MPL,'EdgeColor','none'); hold on
-surf(OP_SITE_LAT,OP_ORB_INC,ones(size(OP_SITE_LAT))*low_bound,'EdgeColor','none','FaceColor',[107 175 226]/255,'FaceAlpha',0.2);
-surf(OP_SITE_LAT,OP_ORB_INC,ones(size(OP_SITE_LAT))*high_bound,'EdgeColor','none','FaceColor',[107 175 226]/255,'FaceAlpha',0.2);
+surf(OP_SITE_LAT,OP_ORB_INC,ones(size(OP_SITE_LAT))*low_bound,'EdgeColor','none','FaceColor',[247 192 52]/255,'FaceAlpha',0.6);
+surf(OP_SITE_LAT,OP_ORB_INC,ones(size(OP_SITE_LAT))*high_bound,'EdgeColor','none','FaceColor',[0 104 58]/255,'FaceAlpha',0.6);
 xlabel("$\phi_{site}$ ($^{\circ}$)"); ylabel("$i_{orbit}$ ($^{\circ}$)");
-zlabel(label_mpl);
+zlabel(label_mpl); colorbar
+legend("","Threshold Payload Weight","Objective Payload Weight")
 
 figure; contourf(OP_SITE_LAT,OP_ORB_INC,MPL, 41, 'EdgeColor','none','FaceAlpha',1); hold on
 % xline(30,"k--",'LineWidth',1.2); yline(100,"k--",'LineWidth',1.2); 
 % scatter(30,100,'filled','MarkerFaceColor',[247 129 52]/255,'LineWidth',1.2);
 clim([bound_pl_low bound_pl_high]); c = colorbar; c.Label.String = label_mpl;
 xlabel("Launch site latitude ($^{\circ}$)"); ylabel("Desired orbit inclination ($^{\circ}$)");
-title(title_name)
+title(title_name); colorbar
 
 %% Helper function ind for 3 stages
 function i = ind(total_stage,stage,mass_type)

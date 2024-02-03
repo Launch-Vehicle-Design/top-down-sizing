@@ -56,15 +56,15 @@ if enable(3)
 disp("##### Concept 3 - Thumper - solid RDRE #####")
 is_3stg_c3 = false;
 param_c3 = sysParam();
-param_c3.mPL = 35;
+param_c3.mPL = 46;
 % first stage
-param_c3.Isp_stg1 = 267.6; % CL-20 (near 100% effective Isp)
-param_c3.sigma_stg1 = 0.06;
-param_c3.density_stg1 = 2040;
+param_c3.Isp_stg1 = 267.6;
+param_c3.sigma_stg1 = 0.065;
+param_c3.density_stg1 = 1948.8;
 % second stage
-param_c3.Isp_stg2 = 369.5; % RP-1 H2O2 (90% effective Isp with RDRE)
-param_c3.sigma_stg2 = 0.1;
-param_c3.density_stg2 = 1370; % O/F ratio 7.07
+param_c3.Isp_stg2 = 369.5;
+param_c3.sigma_stg2 = 0.11;
+param_c3.density_stg2 = 1280;
 % ram/scram condition
 param_c3.is_scram = false;
 param_c3.is_scram_solid_boost = false;
@@ -137,14 +137,14 @@ if enable(6)
 disp("##### Concept 6 - X27 - solid solid RDRE #####")
 is_3stg_c6 = true;
 param_c6 = sysParam();
-param_c6.mPL = 40;
+param_c6.mPL = 45;
 % first stage
-param_c6.Isp_stg1 = 267.6; % CL-20 (near 95% effective Isp)
+param_c6.Isp_stg1 = 276; % CL-20 (near 95% effective Isp)
 param_c6.sigma_stg1 = 0.06;
 param_c6.density_stg1 = 2040;
 % second stage
-param_c6.Isp_stg2 = 267.6; % CL-20 (near 95% effective Isp)
-param_c6.sigma_stg2 = 0.06;
+param_c6.Isp_stg2 = 276; % CL-20 (near 95% effective Isp)
+param_c6.sigma_stg2 = 0.08;
 param_c6.density_stg2 = 2040;
 % third stage
 param_c6.Isp_stg3 = 369.5;

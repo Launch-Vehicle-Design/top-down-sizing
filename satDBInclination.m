@@ -12,9 +12,9 @@ load("SatDBTJ.mat")
 incli = Inclination(Inclination<180&SemiMajorAxis<6378100+500000);
 
 figure; histogram(incli,"EdgeColor","auto","FaceColor",[0 104 56]/255,"FaceAlpha",1);
-hold on; grid on; text(100, 3900, "Courtesy: Union of Concerned Scientists", "Color",[0.8 0.8 0.8])
+hold on; grid on; text(105, 3900, "Courtesy: space-track.org", "Color",[0.8 0.8 0.8])
 xlabel("Orbit Inclination ($^{\circ}$)"); ylabel("Satellite Count");
-title("Active Satellite Count on Orbit Inclination")
+% title("Satellite Count on Orbit Inclination")
 
 sat_count = [sum(incli<101) sum(incli>=101)]; explode = [0,1];
 figure; p = pie3(sat_count,explode);
