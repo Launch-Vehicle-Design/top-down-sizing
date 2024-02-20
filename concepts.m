@@ -58,12 +58,12 @@ is_3stg_c3 = false;
 param_c3 = sysParam();
 param_c3.mPL = 46;
 % first stage
-param_c3.Isp_stg1 = 267.6;
-param_c3.sigma_stg1 = 0.065;
-param_c3.density_stg1 = 1948.8;
+param_c3.Isp_stg1 = 293.49;
+param_c3.sigma_stg1 = 0.06;
+param_c3.density_stg1 = 2026.62;
 % second stage
 param_c3.Isp_stg2 = 369.5;
-param_c3.sigma_stg2 = 0.11;
+param_c3.sigma_stg2 = 0.135;
 param_c3.density_stg2 = 1280;
 % ram/scram condition
 param_c3.is_scram = false;
@@ -72,6 +72,10 @@ param_c3.is_scram_solid_boost = false;
 [optimal_c3, dvdisb_c3] = iterativeConceptDesign(param_c3,is_3stg_c3);
 [mpl_c3,~,incli_c3] = launchAziPLCapacity(optimal_c3, param_c3, is_3stg_c3, "Thumper");
 [PL_max_g_c3, ms2mf_c3, llf_c3] = AHPEval(optimal_c3,is_3stg_c3,mpl_c3,incli_c3)
+
+optimal = optimal_c3; dvdisb = dvdisb_c3; param = param_c3;
+save("../lv-dynamics-model/trajectory_optimization/thumper_trajopt_selfcontain/thumper.mat",...
+    "optimal","dvdisb","param");
 end
 
 %% Concept 4 - Trix - solid solid solid
