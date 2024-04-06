@@ -7,15 +7,15 @@ if enable(1)
 disp("##### Concept 1 - Hopps - solid solid #####")
 is_3stg_c1 = false;
 param_c1 = sysParam();
-param_c1.mPL = 15;
+param_c1.mPL = 46;
 % first stage
-param_c1.Isp_stg1 = 267.6; % CL-20 (near 100% effective Isp)
-param_c1.sigma_stg1 = 0.06;
-param_c1.density_stg1 = 2040;
+param_c1.Isp_stg1 = 280;
+param_c1.sigma_stg1 = 0.085;
+param_c1.density_stg1 = 1783.8;
 % second stage
-param_c1.Isp_stg2 = 267.6; % CL-20 (near 100% effective Isp)
-param_c1.sigma_stg2 = 0.08;
-param_c1.density_stg2 = 2040;
+param_c1.Isp_stg2 = 320;
+param_c1.sigma_stg2 = 0.096;
+param_c1.density_stg2 = 1440;
 % ram/scram condition
 param_c1.is_scram = false;
 param_c1.is_scram_solid_boost = false;
@@ -58,12 +58,12 @@ is_3stg_c3 = false;
 param_c3 = sysParam();
 param_c3.mPL = 46;
 % first stage
-param_c3.Isp_stg1 = 293.49;
-param_c3.sigma_stg1 = 0.06;
-param_c3.density_stg1 = 2026.62;
+param_c3.Isp_stg1 = 278;
+param_c3.sigma_stg1 = 0.085;
+param_c3.density_stg1 = 1783.8;
 % second stage
 param_c3.Isp_stg2 = 369.5;
-param_c3.sigma_stg2 = 0.135;
+param_c3.sigma_stg2 = 0.096;
 param_c3.density_stg2 = 1280;
 % ram/scram condition
 param_c3.is_scram = false;

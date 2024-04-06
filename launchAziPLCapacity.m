@@ -127,7 +127,7 @@ figure; surf(OP_SITE_LAT,OP_ORB_INC,MPL,'EdgeColor','none'); hold on
 surf(OP_SITE_LAT,OP_ORB_INC,ones(size(OP_SITE_LAT))*low_bound,'EdgeColor','none','FaceColor',[247 192 52]/255,'FaceAlpha',0.6);
 surf(OP_SITE_LAT,OP_ORB_INC,ones(size(OP_SITE_LAT))*high_bound,'EdgeColor','none','FaceColor',[0 104 58]/255,'FaceAlpha',0.6);
 xlabel("$\phi_{site}$ ($^{\circ}$)"); ylabel("$i_{orbit}$ ($^{\circ}$)");
-zlabel(label_mpl); colorbar
+zlabel(label_mpl); clim([bound_pl_low bound_pl_high]); colormap(flipud(summer)); colorbar
 legend("","Threshold Payload Weight","Objective Payload Weight")
 
 figure; contourf(OP_SITE_LAT,OP_ORB_INC,MPL, 41, 'EdgeColor','none','FaceAlpha',1); hold on
