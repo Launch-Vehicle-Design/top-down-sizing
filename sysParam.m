@@ -2,13 +2,13 @@
 function param = sysParam()
 
     % requirement
-    param.vrq = 10058;
-    param.mPL = 35; % kg
+    param.mPL = 46; % kg
     param.mPL_lowerBound = 24;
     param.mPL_highBound = 45.4;
     param.G = 0.0000000000667428;
     param.Mearth = 5.9722e+24;
     param.Rearth = 6378100;
+    param.release_lat = 80/180*pi;
     param.release_vel = 250.786;
     param.release_alt = 12192;
     param.release_temp = 216.65;
@@ -44,7 +44,13 @@ function param = sysParam()
     param.density_stg3 = 2040;
 
     % dv losses
-    param.dragloss = 65;
+    param.gravloss = 1050;
+    param.dragloss = 40;
     param.proploss = 150;
-    param.steeloss = 360;
+    param.steeloss = 200;
+    reserv_perc = 0.02;
+    param.dvreserv = (param.gravloss+param.dragloss+param.proploss+param.steeloss+param.orb_vel)*reserv_perc;
+
+    % total dv
+    param.vrq = param.dvreserv/reserv_perc*(1+reserv_perc)-param.release_vel+465.1*cos(param.release_lat);
     
