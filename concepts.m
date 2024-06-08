@@ -9,12 +9,12 @@ is_3stg_c1 = false;
 param_c1 = sysParam();
 param_c1.mPL = 46;
 % first stage
-param_c1.Isp_stg1 = 280;
-param_c1.sigma_stg1 = 0.085;
+param_c1.Isp_stg1 = 377;                                                            
+param_c1.sigma_stg1 = 0.12;
 param_c1.density_stg1 = 1783.8;
 % second stage
-param_c1.Isp_stg2 = 320;
-param_c1.sigma_stg2 = 0.096;
+param_c1.Isp_stg2 = 377;
+param_c1.sigma_stg2 = 0.1;
 param_c1.density_stg2 = 1440;
 % ram/scram condition
 param_c1.is_scram = false;

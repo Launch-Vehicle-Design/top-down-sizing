@@ -127,15 +127,15 @@ figure; surf(OP_SITE_LAT,OP_ORB_INC,MPL,'EdgeColor','none'); hold on
 surf(OP_SITE_LAT,OP_ORB_INC,ones(size(OP_SITE_LAT))*low_bound,'EdgeColor','none','FaceColor',[247 192 52]/255,'FaceAlpha',0.6);
 surf(OP_SITE_LAT,OP_ORB_INC,ones(size(OP_SITE_LAT))*high_bound,'EdgeColor','none','FaceColor',[0 104 58]/255,'FaceAlpha',0.6);
 xlabel("$\phi_{site}$ ($^{\circ}$)"); ylabel("$i_{orbit}$ ($^{\circ}$)");
-zlabel(label_mpl); clim([bound_pl_low bound_pl_high]); colormap(flipud(summer)); colorbar
-legend("","Threshold Payload Weight","Objective Payload Weight")
+zlabel(label_mpl); clim([bound_pl_low bound_pl_high]); colormap(flipud(summer)); colorbar % zlim([100,140])
+lgd = legend("Thumper Payload Capacity","Threshold Payload Capacity","Objective Payload Capacity","interpreter","latex");
 
 figure; contourf(OP_SITE_LAT,OP_ORB_INC,MPL, 41, 'EdgeColor','none','FaceAlpha',1); hold on
-% xline(30,"k--",'LineWidth',1.2); yline(100,"k--",'LineWidth',1.2); 
+% xline(30,"k--",'LineWidth',1.2); yline(100,"k--",'LineWidth',1.2);
 % scatter(30,100,'filled','MarkerFaceColor',[247 129 52]/255,'LineWidth',1.2);
-clim([bound_pl_low bound_pl_high]); c = colorbar; c.Label.String = label_mpl;
+clim([bound_pl_low bound_pl_high]); colormap(flipud(summer)); c = colorbar; c.Label.String = label_mpl;
 xlabel("Launch site latitude ($^{\circ}$)"); ylabel("Desired orbit inclination ($^{\circ}$)");
-title(title_name); colorbar
+title(title_name); 
 
 %% Helper function ind for 3 stages
 function i = ind(total_stage,stage,mass_type)
